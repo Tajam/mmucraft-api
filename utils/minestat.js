@@ -29,4 +29,9 @@ export const getStats = (port, callback) => {
       callback(false)
       client.end()
     })
+
+    client.on('error', () => {
+      callback(false)
+      client.end()
+    })
   }
