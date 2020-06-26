@@ -1,35 +1,8 @@
 import fs from 'fs'
-import { db, settings } from './config.js'
-import sql from 'sequelize'
 import express from 'express'
 import body_parser from 'body-parser'
-
-/**
- * database connection and models definition
- */
-
-const { Sequelize } = sql
-const db_conf = {
-  host: db.host,
-  dialect: 'mysql',
-  logging: db.logs === 'true'
-}
-const model_postfix = '.model.js'
-const sequelize = new Sequelize(db.name, db.user, db.pass, db_conf)
-
-fs
-  .readdirSync('./models')
-  .filter(file => file.endsWith(model_postfix))
-  .map(async file => {
-    const { default: model } = await import(`./models/${file}`)
-    const table_name = file.slice(0, -model_postfix.length)
-    sequelize.define(table_name, model, { timestamps: false, tableName: table_name })
-    sequelize.models[table_name].sync()
-  })
-
-/**
- * register routes
- */
+import { settings } from './config.js'
+import { models } from './db.js'
 
 const app = express()
 app.targets = {}
@@ -51,7 +24,12 @@ app.use(express.json())
 
 app.post(`/${settings.prefix}`, (req, res) => {
   const key = req.headers.api
-  sequelize.models.apikey.findOne({
+  const { action, target } = req.body
+  if (!key || !action || !target ) {
+    res.status(400).send('invalid format')
+    return
+  }
+  models.apikey.findOne({
     attributes: ['allowCreate', 'allowRead', 'allowUpdate', 'allowDelete'],
     where: { key: key }
   }).then((permission) => {
