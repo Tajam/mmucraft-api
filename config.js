@@ -15,6 +15,13 @@ export const mail = {
   pass: process.env.MAIL_PASS
 }
 
+export const server_port = {
+  lobby: process.env.SERVER_LOBBY,
+  survival: process.env.SERVER_SURVIVAL,
+  creative: process.env.SERVER_CREATIVE,
+  civil: process.env.SERVER_CIVIL
+}
+
 export const settings = {
   port: process.env.PORT,
   prefix: process.env.PREFIX,
