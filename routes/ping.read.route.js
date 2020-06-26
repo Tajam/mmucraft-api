@@ -1,5 +1,5 @@
-/* A simple ping test API */
+/* read test */
 
 export const controller = (req, res) => {
-  res.status(200).send('pong')
+  res.status(200).json({ ping: 'read', response: req.body })
 }
