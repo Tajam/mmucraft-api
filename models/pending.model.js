@@ -21,12 +21,8 @@ export default {
     type: DataTypes.STRING(45),
     allowNull: false
   },
-  createdAt: {
-    type: DataTypes.DATEONLY,
-    allowNull: false
-  },
-  updatedAt: {
-    type: DataTypes.DATEONLY,
+  purpose: {
+    type: DataTypes.STRING,
     allowNull: false
   }
 }
