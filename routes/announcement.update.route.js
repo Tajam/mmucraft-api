@@ -4,7 +4,7 @@
  *   - id: the discord message id
  *   - content: the content of the message in plaintext
  * response:
- *   - status: 0 = success, 1 = not exists, 2 = failed
+ *   - status: 0 = success, 1 = not exists
  */
 
 import { models } from '../db.js'
@@ -16,7 +16,7 @@ const { announcement } = models
 export const controller = (req, res) => {
   const { id, content } = req.body
   if (!id || !content) {
-    res.status(400).json({ status: 2 })
+    res.status(400).send('invalid usage')
     return
   }
   const content_encoded =  base64.encode(utf8.encode(content))
@@ -30,6 +30,6 @@ export const controller = (req, res) => {
       number > 0 ? res.json({ status: 0 }) : res.json({ status: 1 })
     })
     .catch((reason) => {
-      res.status(500).json({ status: 2 })
+      res.status(500).send('error')
     })
 }

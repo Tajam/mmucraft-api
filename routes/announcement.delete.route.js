@@ -3,7 +3,7 @@
  * request:
  *   - id: the discord message id
  * response:
- *   - status: 0 = success, 1 = not exists, 2 = failed
+ *   - status: 0 = success, 1 = not exists
  */
 
 import { models } from '../db.js'
@@ -13,7 +13,7 @@ const { announcement } = models
 export const controller = (req, res) => {
   const { id } = req.body
   if (!id) {
-    res.status(400).json({ status: 2 })
+    res.status(400).send('invalid usage')
     return
   }
   announcement
@@ -25,6 +25,6 @@ export const controller = (req, res) => {
       number > 0 ? res.json({ status: 0 }) : res.json({ status: 1 })
     })
     .catch((reason) => {
-      res.status(500).json({ status: 2 })
+      res.status(500).send('error')
     })
 }

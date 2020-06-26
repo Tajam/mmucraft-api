@@ -7,7 +7,7 @@
  *   - author: the author of the message
  *   - date: the create date of the message
  *   - content: the content of the message in plaintext
- *   - status: 0 = success, 1 = not exists, 2 = failed
+ *   - status: 0 = success, 1 = not exists
  */
 
 import { models } from '../db.js'
@@ -19,7 +19,7 @@ const { announcement } = models
 export const controller = (req, res) => {
   const { id } = req.body
   if (!id) {
-    res.status(400).json({ status: 2 })
+    res.status(400).send('invalid usage')
     return
   }
   announcement
@@ -42,6 +42,6 @@ export const controller = (req, res) => {
       })
     })
     .catch((reason) => {
-      res.status(500).json({ status: 2 })
+      res.status(500).send('error')
     })
 }
