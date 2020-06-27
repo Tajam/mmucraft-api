@@ -57,6 +57,9 @@ const permission_check = (permission, req, res) => {
 const perform_action = (req, res) => {
   const { action, target } = req.body
   const controller = app.targets[action][target]
-  if (!controller) res.status(404).send('unknown target')
+  if (!controller) {
+    res.status(404).send('unknown target')
+    return
+  }
   controller(req, res)
 }
