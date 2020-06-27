@@ -11,10 +11,10 @@ fs
   .readdirSync('./routes')
   .filter(file => file.endsWith('.route.js'))
   .map(async file => {
-    const { controller } = await import(`./routes/${file}`)
+    const { controller, level } = await import(`./routes/${file}`)
     const names = file.split('.')
     if (!app.targets[names[1]]) app.targets[names[1]] = {}
-    app.targets[names[1]][names[0]] = controller
+    app.targets[names[1]][names[0]] = { controller, level: level || 1 }
   })
 
 app.use(body_parser.json())
@@ -30,36 +30,32 @@ app.post(`/${settings.prefix}`, (req, res) => {
     return
   }
   models.apikey.findOne({
-    attributes: ['allowCreate', 'allowRead', 'allowUpdate', 'allowDelete'],
+    attributes: ['create', 'read', 'update', 'delete'],
     where: { key: key }
   }).then((permission) => {
-    permission_check(permission, req, res)
+    if (!permission) {
+      res.status(401).send('invalid access')
+      return
+    }
+    const perm_level = permission[action]
+    if (perm_level === undefined) {
+      res.status(404).send('unknown action')
+      return
+    }
+    const { controller, level } = app.targets[action][target]
+    if (!controller) {
+      res.status(404).send('unknown target')
+      return
+    }
+    if (level > perm_level) {
+      res.status(401).send('insufficient permission')
+      return
+    }
+    controller(req, res)
   }).catch((reason) => {
     console.log(reason)
     res.status(500).send('database error')
   })
 })
+
 app.listen(settings.port, () => console.log(`MMUC API listening at port ${settings.port}`))
-
-const permission_check = (permission, req, res) => {
-  if (!permission) {
-    res.status(401).send('invalid access')
-    return
-  }
-  const { action } = req.body
-  if (!permission[`allow${action.charAt(0).toUpperCase() + action.slice(1)}`]) {
-    res.status(403).send('insufficient permission')
-    return
-  }
-  perform_action(req, res)
-}
-
-const perform_action = (req, res) => {
-  const { action, target } = req.body
-  const controller = app.targets[action][target]
-  if (!controller) {
-    res.status(404).send('unknown target')
-    return
-  }
-  controller(req, res)
-}

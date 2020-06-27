@@ -17,24 +17,24 @@ export default {
     allowNull: false,
     unique: true
   },
-  allowCreate: {
-    type: DataTypes.BOOLEAN,
+  create: {
+    type: DataTypes.TINYINT,
     allowNull: false,
-    defaultValue: false
+    defaultValue: 0
   },
-  allowRead: {
-    type: DataTypes.BOOLEAN,
+  read: {
+    type: DataTypes.TINYINT,
     allowNull: false,
-    defaultValue: false
+    defaultValue: 0
   },
-  allowUpdate: {
-    type: DataTypes.BOOLEAN,
+  update: {
+    type: DataTypes.TINYINT,
     allowNull: false,
-    defaultValue: false
+    defaultValue: 0
   },
-  allowDelete: {
-    type: DataTypes.BOOLEAN,
+  delete: {
+    type: DataTypes.TINYINT,
     allowNull: false,
-    defaultValue: false
+    defaultValue: 0
   }
 }

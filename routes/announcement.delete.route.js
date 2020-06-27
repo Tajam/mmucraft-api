@@ -28,3 +28,5 @@ export const controller = (req, res) => {
       res.status(500).send('error')
     })
 }
+
+export const level = 2
