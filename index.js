@@ -59,3 +59,5 @@ app.post(`/${settings.prefix}`, (req, res) => {
 })
 
 app.listen(settings.port, () => console.log(`MMUC API listening at port ${settings.port}`))
+
+// hi i am casey
