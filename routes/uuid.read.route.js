@@ -6,7 +6,7 @@
  *   - uuid: the generated uuid
  */
 
-import { uuidConstruct } from '../utils/uuid.js'
+import { uuidConstruct } from '../utils/algorithm.js'
 
 export const controller = (req, res) => {
   const { name } = req.body
