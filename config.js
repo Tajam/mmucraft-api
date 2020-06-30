@@ -25,5 +25,11 @@ export const server_port = {
 export const settings = {
   port: process.env.PORT,
   prefix: process.env.PREFIX,
-  master_key: process.env.MASTER_KEY
+  host_url: process.env.HOST_URL,
+  master_key: process.env.MASTER_KEY,
+  email_domain_whitelist = [
+    '@gmail.com',
+    '@student.mmu.edu.my',
+    '@mmu.edu.my'
+  ]
 }

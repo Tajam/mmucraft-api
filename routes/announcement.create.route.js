@@ -31,7 +31,7 @@ export const controller = (req, res) => {
         date: date
       }
     })
-    .then(([record, created]) => {
+    .then(([model, created]) => {
       res.status(200)
       created ? res.json({ status: 0 }) : res.json({ status: 1 })
     })

@@ -1,11 +1,10 @@
 /**
- * get basic pending information
+ * delete a pending record
  * request:
  *   - token: the pending token string
  *   - purpose: the purpose type of the pending (string)
  * response:
- *   - email: the recorded email address
- *   - status: 0 = exists, 1 = not exists
+ *   - status: 0 = success, 1 = not exists
  */
 
 import { models } from '../db.js'
@@ -19,18 +18,12 @@ export const controller = (req, res) => {
     return
   }
   pending
-    .findOne({
-      where: { hash: token, purpose: purpose }
+    .destroy({
+      where: { hash: token, purpose: purpose },
     })
-    .then((model) => {
-      if (!model) {
-        res.send(200).json({ status: 1 })
-        return
-      }
-      res.send(200).json({
-        email: model.email,
-        status: 0
-      })
+    .then((number) => {
+      res.status(200)
+      number > 0 ? res.json({ status: 0 }) : res.json({ status: 1 })
     })
     .catch((reason) => {
       res.status(500).send('error')
