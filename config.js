@@ -27,7 +27,7 @@ export const settings = {
   prefix: process.env.PREFIX,
   host_url: process.env.HOST_URL,
   master_key: process.env.MASTER_KEY,
-  email_domain_whitelist = [
+  email_domain_whitelist: [
     '@gmail.com',
     '@student.mmu.edu.my',
     '@mmu.edu.my'
