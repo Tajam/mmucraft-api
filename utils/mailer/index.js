@@ -5,11 +5,11 @@ import fs from 'fs'
 
 const templates = {}
 fs
-  .readdirSync('./template')
+  .readdirSync('./utils/mailer/template')
   .filter(file => file.endsWith('.email'))
   .map(async file => {
     const name = file.split('.')[0]
-    const html = fs.readFileSync(`./template/${file}`, 'utf8')
+    const html = fs.readFileSync(`./utils/mailer/template/${file}`, 'utf8')
     templates[name] = html
   })
 

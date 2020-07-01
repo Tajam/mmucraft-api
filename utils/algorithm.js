@@ -1,3 +1,6 @@
+import crypto from 'crypto'
+import md5 from 'md5'
+
 export const shuffle = (list) => {
   for (let i = list.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1))
@@ -6,7 +9,6 @@ export const shuffle = (list) => {
 }
 
 export const uuidConstruct = (name) => {
-  import md5 from 'md5'
   const hexString = md5('OfflinePlayer:' + name)
   const tokens = hexString.match(/[a-fA-F0-9][a-fA-F0-9]/gi)
   const byteArray = tokens.map((t, i) => {
@@ -27,16 +29,15 @@ export const uuidConstruct = (name) => {
 export const generateSalt = (saltLength) => {
   let salt = '';
   for (let i = 0; i < saltLength; i ++) {
-    let value = Math.floor(Math.random() * 16);
-    salt += value.toString(16);
+    let value = Math.floor(Math.random() * 16)
+    salt += value.toString(16)
   }
   return salt;
-},
+}
 
 export const hashPassword = (password, salt) => {
-  import crypto from 'crypto'
-  let hash = crypto.createHash('sha256').update(password).digest('hex');
+  let hash = crypto.createHash('sha256').update(password).digest('hex')
   hash += salt;
-  hash = crypto.createHash('sha256').update(hash).digest('hex');
+  hash = crypto.createHash('sha256').update(hash).digest('hex')
   return hash;
 }

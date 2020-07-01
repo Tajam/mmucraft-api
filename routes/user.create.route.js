@@ -11,7 +11,7 @@
  */
 
 import { models } from '../db.js'
-import { generateSalt, hashPassword } from '../utils/algorithm.js'
+// import { generateSalt, hashPassword } from '../utils/algorithm.js'
 import sql from 'sequelize'
 
 const { users, pending } = models
@@ -56,5 +56,11 @@ export const controller = (req, res) => {
           model_p.destroy()
           res.status(200).json({ status: 0 })
         })
+        .catch((reason) => {
+          res.status(500).send('error')
+        })
+    })
+    .catch((reaons) => {
+      res.status(500).send('error')
     })
 }

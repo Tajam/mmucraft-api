@@ -10,7 +10,7 @@
 import { settings } from '../config.js'
 import { models } from '../db.js'
 import { verify } from '../utils/recaptcha.js'
-import { invitationSendMail } from '../utils/mailer'
+import { invitationSendMail } from '../utils/mailer/index.js'
 import Hashids from 'hashids'
 
 const purpose = 'invite'
@@ -64,6 +64,9 @@ export const controller = (req, res) => {
           } else {
             res.status(200).json({ status: 3 })
           }
+        })
+        .catch((reason) => {
+          res.status(500).send('error')
         })
     })
 }

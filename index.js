@@ -11,7 +11,7 @@ fs
   .readdirSync('./routes')
   .filter(file => file.endsWith('.route.js'))
   .map(async file => {
-    const { controller, level } = await import(`./routes/${file}`)
+    const { controller, level } = await import(`./routes/${file}`).catch(r => console.log(`${file}`))
     const names = file.split('.')
     if (!app.targets[names[1]]) app.targets[names[1]] = {}
     app.targets[names[1]][names[0]] = { controller, level: level || 1 }

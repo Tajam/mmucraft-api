@@ -7,11 +7,9 @@ export const verify = (token) => {
     .post(recaptcha_url)
     .then((res) => {
       const { success, hostname } = res.data
-      console.log(hostname)
       return success
     })
     .catch((reason) => {
-      console.log(reason)
       return false
     })
 }
