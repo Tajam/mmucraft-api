@@ -1,7 +1,7 @@
 /**
  * get the announcement data
  * request:
- *   - id: the discord message id
+ *   - offset: sequence number of message in decending order
  * response:
  *   - id: the discord message id
  *   - author: the author of the message
@@ -17,14 +17,15 @@ import utf8 from 'utf8'
 const { announcement } = models
 
 export const controller = (req, res) => {
-  const { id } = req.body
-  if (!id) {
+  const { offset } = req.body
+  if (offset === undefined) {
     res.status(400).send('invalid usage')
     return
   }
   announcement
     .findOne({
-      where: { id: id }
+      offset: offset,
+      order: [['date', 'DESC']]
     })
     .then((model) => {
       if (!model) {
