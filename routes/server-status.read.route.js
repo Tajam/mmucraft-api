@@ -30,8 +30,8 @@ export const controller = (req, res) => {
       res.status(200).json({
         name,
         version,
-        current_players,
-        max_players,
+        current_players: parseInt(current_players),
+        max_players: parseInt(max_players),
         status: 0
       })
     })
