@@ -5,11 +5,6 @@
  * response:
  *   - name: the in-game name of the user
  *   - email: registered email address
- *   - position:
- *     - world: the world name of this position
- *     - x: last x-coordinate of the user
- *     - y: last y-coordinate of the user
- *     - z: last z-coordinate of the user
  *   - status: 0 = exists, 1 = not exists
  */
 
@@ -35,12 +30,6 @@ export const controller = (req, res) => {
       res.status(200).json({
         name: model.realname,
         email: model.email,
-        position: {
-          world: model.world,
-          x: model.x,
-          y: model.y,
-          z: model.z
-        },
         status: 0
       })
     })
