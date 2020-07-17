@@ -25,8 +25,9 @@ export const server_port = {
 export const settings = {
   port: process.env.PORT,
   prefix: process.env.PREFIX,
-  host_url: process.env.HOST_URL,
+  host_name: process.env.HOST_NAME,
   master_key: process.env.MASTER_KEY,
+  recaptcha_key: process.env.RECAPTCHA_KEY,
   email_domain_whitelist: [
     '@gmail.com',
     '@student.mmu.edu.my',

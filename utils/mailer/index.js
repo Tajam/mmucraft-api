@@ -23,15 +23,15 @@ const transporter = nodemailer.createTransport({
   }
 })
 
-const email = (receiver, type, context, callback) => {
+const email = (receiver, type, subject, context, callback) => {
   context.year = new Date().getFullYear()
   const template = templates[type]
   const templateScript = Handlebars.compile(template)
   const html = templateScript(context)
   const message = {
-    from: 'MMUC',
+    from: 'MMUC Network',
     to: receiver,
-    subject: subject,
+    subject,
     html: html
   }
   transporter.sendMail(message, (error) => {
@@ -41,15 +41,15 @@ const email = (receiver, type, context, callback) => {
 
 export const invitationSendMail = (token, receiver, callback) => {
   const context = {
-    link: `${settings.domain_name}/register/${token}`
+    link: `${settings.host_name}/register/${token}`
   }
-  email(receiver, 'invitation', content, callback)
+  email(receiver, 'invitation', 'Welcome to MMUC Network!', context, callback)
 }
 
 export const passwordSendMail = (token, receiver, callback) => {
   const context = {
-    linkReset: `${settings.host_url}password-reset/${token}`,
-    linkCancel: `${settings.host_url}reset-cancel/${token}`
+    linkReset: `${settings.host_name}/password-reset/${token}`,
+    linkCancel: `${settings.host_name}/reset-cancel/${token}`
   }
-  email(receiver, 'password', content, callback)
+  email(receiver, 'password', 'MMUC Network Password Reset', context, callback)
 }
