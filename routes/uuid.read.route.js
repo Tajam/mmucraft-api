@@ -18,6 +18,7 @@ export const controller = (req, res) => {
     const uuid = uuidConstruct(name)
     res.status(200).json({ uuid: uuid })
   } catch (e) {
+    console.log(e)
     res.status(500).send('error')
   }
 }

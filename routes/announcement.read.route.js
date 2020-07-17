@@ -43,6 +43,7 @@ export const controller = (req, res) => {
       })
     })
     .catch((reason) => {
+      console.log(reason)
       res.status(500).send('error')
     })
 }

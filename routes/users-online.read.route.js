@@ -24,6 +24,7 @@ export const controller = (req, res) => {
       res.status(200).json({ players })
     })
     .catch((reason) => {
+      console.log(reason)
       res.status(500).send('error')
     })
 }

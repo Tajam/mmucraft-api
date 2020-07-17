@@ -30,6 +30,7 @@ export const controller = (req, res) => {
       number > 0 ? res.json({ status: 0 }) : res.json({ status: 1 })
     })
     .catch((reason) => {
+      console.log(reason)
       res.status(500).send('error')
     })
 }

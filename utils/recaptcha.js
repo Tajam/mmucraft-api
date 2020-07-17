@@ -11,6 +11,7 @@ export const verify = (token, callback) => {
       callback(hostname === settings.host_name ? success : false)
     })
     .catch((reason) => {
+      console.log(reason)
       callback(false)
     })
 }
