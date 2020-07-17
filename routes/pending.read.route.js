@@ -24,10 +24,10 @@ export const controller = (req, res) => {
     })
     .then((model) => {
       if (!model) {
-        res.send(200).json({ status: 1 })
+        res.status(200).json({ status: 1 })
         return
       }
-      res.send(200).json({
+      res.status(200).json({
         email: model.email,
         status: 0
       })
