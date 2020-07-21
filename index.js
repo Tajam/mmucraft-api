@@ -20,7 +20,7 @@ fs
 
 app.use(body_parser.json())
 app.use(body_parser.urlencoded({ extended: true }))
-app.use(express.urlencoded())
+app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cors())
 
