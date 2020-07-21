@@ -15,22 +15,26 @@ export const controller = (req, res) => {
   if (seeds.length <= 0) {
     axios
       .get(
-        'https://www.random.org/integers/?num=5&min=0&max=10000&col=1&base=10&format=plain&rnd=new'
+        'https://www.random.org/integers/?num=100&min=0&max=10000&col=1&base=10&format=plain&rnd=new'
       )
       .then((seedRes) => {
         status = 1
-        const data = seedRes.data.split('\n').map(number => parseInt(number))
-        console.log(data)
-        seeds.concat(data)
+        seedRes.data.split('\n').forEach(number => {
+          seeds.push(parseInt(number))
+        })
+        // get rid of the last null element
+        seeds.pop()
       })
       .catch((reason) => {
         status = 2
-        console.log(reason)
         seeds.push(Math.round(Math.random() * 10000))
+        console.log(reason.response.data)
       })
       .finally(() => {
         res.status(200).json({ seed: seeds.pop(), status })
       })
+  } else {
+    res.status(200).json({ seed: seeds.pop(), status })
   }
 }
 
