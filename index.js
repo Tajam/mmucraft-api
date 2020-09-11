@@ -22,7 +22,15 @@ app.use(body_parser.json())
 app.use(body_parser.urlencoded({ extended: true }))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || origin.endsWith(settings.host_name)) {
+      callback(null, true)
+      return
+    }
+    callback(new Error('Not allowed by CORS'))
+  }
+}))
 
 app.post(`/${settings.prefix}`, (req, res) => {
   const key = req.headers.api
