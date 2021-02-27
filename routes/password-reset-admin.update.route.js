@@ -6,6 +6,7 @@
  *   - status: 0 = success, 1 = user not exists, 2 = email not send
  */
 
+import { settings } from '../config.js'
 import { models } from '../db.js'
 import { generateSalt, hashPassword } from '../utils/algorithm.js'
 import { passwordNewSendMail } from '../utils/mailer/index.js'
