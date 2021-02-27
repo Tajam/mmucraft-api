@@ -8,7 +8,7 @@ export const verify = (token, callback) => {
     .post(`${recaptcha_url}?secret=${settings.recaptcha_key}&response=${token}`)
     .then((res) => {
       const { success, hostname } = res.data
-      callback(settings.host_name.split(':')[0] == hostname ? success : false)
+      callback(settings.host_name.split(':')[0] == hostname || settings.host_name_check !== 'true' ? success : false)
     })
     .catch((reason) => {
       console.log(reason)

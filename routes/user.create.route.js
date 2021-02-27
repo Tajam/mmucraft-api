@@ -2,10 +2,10 @@
  * creates a new user account
  * request:
  *   - name: the in-game name of the user
- *   - password: the password either in plaintext
+ *   - password: the password in plaintext
  *   - token: the pending token for new account
  * response:
- *   - status: 0 = success, 1 = token not exists, 2 = username not allowed, 3 = username or email exists
+ *   - status: 0 = success, 1 = token not exists, 2 = username not allowed, 3 = username or email exists, 4 = password too short
  */
 
 import { models } from '../db.js'
@@ -21,8 +21,12 @@ export const controller = (req, res) => {
     res.status(400).send('invalid usage')
     return
   }
-  if (!/^[A-Za-z0-9_]+$/.test(name)) {
+  if (!/^[A-Za-z0-9_]+$/.test(name) && name.length >= 3 && name.length <= 16) {
     res.status(200).json({ status: 2 })
+    return
+  }
+  if (password.length < 5) {
+    res.status(200).json({ status: 4 })
     return
   }
   pending

@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cors({
   origin: (origin, callback) => {
-    if (!origin || origin.endsWith(settings.host_name)) {
+    if (!origin || origin.endsWith(settings.host_name) || settings.host_name_check !== 'true') {
       callback(null, true)
       return
     }
@@ -44,6 +44,7 @@ app.post(`/${settings.prefix}`, (req, res) => {
     where: { key: key }
   }).then((permission) => {
     if (!permission) {
+      console.log('access denied - invalid access key!')
       res.status(401).send('invalid access')
       return
     }
@@ -58,6 +59,7 @@ app.post(`/${settings.prefix}`, (req, res) => {
       return
     }
     if (level > perm_level) {
+      console.log('access denied - insufficient permission!')
       res.status(401).send('insufficient permission')
       return
     }
